@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState} from 'react'
 import {
   ScrollView,
   View,
@@ -7,13 +7,13 @@ import {
   Touchable,
   TouchableOpacity,
   Alert,
-} from 'react-native';
-import {Feather} from '@expo/vector-icons';
-import colors from 'tailwindcss/colors';
+} from 'react-native'
+import {Feather} from '@expo/vector-icons'
+import colors from 'tailwindcss/colors'
 
-import {BackButton} from '../components/BackButton';
-import {Checkbox} from '../components/Checkbox';
-import {api} from '../lib/axios';
+import {BackButton} from '../components/BackButton'
+import {Checkbox} from '../components/Checkbox'
+import {api} from '../lib/axios'
 
 const availableWeekDays = [
   'Domingo',
@@ -23,38 +23,38 @@ const availableWeekDays = [
   'Quinta-feira',
   'Sexta-feira',
   'Sábado',
-];
+]
 
 export function New() {
-  const [title, setTitle] = useState('');
-  const [weekDays, setWeekDays] = useState<number[]>([]);
+  const [title, setTitle] = useState('')
+  const [weekDays, setWeekDays] = useState<number[]>([])
 
   function handleToggleWeekDay(weekDayIndex: number) {
     if (weekDays.includes(weekDayIndex)) {
       setWeekDays((prevState) =>
         prevState.filter((weekDay) => weekDay !== weekDayIndex)
-      );
+      )
     } else {
-      setWeekDays((prevState) => [...prevState, weekDayIndex]);
+      setWeekDays((prevState) => [...prevState, weekDayIndex])
     }
   }
   async function handleCreateNewHabit() {
     try {
       if (!title.trim() || weekDays.length === 0) {
-        Alert.alert(
+        return Alert.alert(
           'Novo Hábito',
           'Informe o nome do hábito e escolha a periodicidade.'
-        );
+        )
       }
-      await api.post('/habits', {title, weekDays});
+      await api.post('/habits', {title, weekDays})
 
-      setTitle('');
-      setWeekDays([]);
+      setTitle('')
+      setWeekDays([])
 
-      Alert.alert('Novo Hábito', 'Hábito criado com sucesso!');
+      Alert.alert('Novo Hábito', 'Hábito criado com sucesso!')
     } catch (error) {
-      console.log(error);
-      Alert.alert('Ops...', 'Não foi possível criar o novo hábito.');
+      console.log(error)
+      Alert.alert('Ops...', 'Não foi possível criar o novo hábito.')
     }
   }
 
@@ -107,5 +107,5 @@ export function New() {
         </TouchableOpacity>
       </ScrollView>
     </View>
-  );
+  )
 }
